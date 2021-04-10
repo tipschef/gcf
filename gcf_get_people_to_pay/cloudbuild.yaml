@@ -1,0 +1,20 @@
+substitutions:
+  _ENV: dev
+  _CLOUD_FUNCTION_LOCATION: europe-west3
+  _PROJECT_LOCATION: eu
+
+steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - functions
+  - deploy
+  - gcf-get_people_to_pay-$_ENV-$_PROJECT_LOCATION
+  - --runtime=python38
+  - --region=$_CLOUD_FUNCTION_LOCATION
+  - --source=.
+  - --entry-point=start_gcf_get_people_to_pay
+  - --memory=128MB
+  - --timeout=540s
+  - --trigger-event=google.pubsub.topic.publish
+  - --trigger-resource=topic-trigger-$_ENV-get_people_to_pay
+  - --set-env-vars=PROJECT_ID=tipschef-$_ENV;PROJECT_ENV=$_ENV
