@@ -21,7 +21,7 @@ class GetPeopleToPayExecution:
 
         self._build_secret_manager_importer(project_id, env)
         self._build_api_importer()
-        self._build_pub_sub_exporter()
+        self._build_pub_sub_exporter(project_id, env)
 
     def _build_api_importer(self):
         secret_json = self.secret_manager_importer.get_secret_json()
@@ -30,8 +30,8 @@ class GetPeopleToPayExecution:
     def _build_secret_manager_importer(self, project_id, env):
         self.secret_manager_importer = SecretManagerImporter(project_id, 'secret-gcf-get_people_to_pay', env)
 
-    def _build_pub_sub_exporter(self):
-        self.pub_sub_exporter = PubSubExporter()
+    def _build_pub_sub_exporter(self, project_id, env):
+        self.pub_sub_exporter = PubSubExporter(project_id, 'get_people_to_pay', env)
 
     def start(self):
         print('Getting all people to pay from the API')
@@ -39,6 +39,8 @@ class GetPeopleToPayExecution:
 
         print('Send users to be payed to pubsub')
         self.pub_sub_exporter.send_users_to_pubsub(people_to_pay)
+
+        # self.pub_sub_exporter.pull_messages()
 
     @staticmethod
     def _check_env_variables():

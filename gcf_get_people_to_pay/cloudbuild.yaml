@@ -17,4 +17,4 @@ steps:
   - --timeout=540s
   - --trigger-event=google.pubsub.topic.publish
   - --trigger-resource=topic-trigger-$_ENV-get_people_to_pay
-  - --set-env-vars=PROJECT_ID=tipschef-$_ENV;PROJECT_ENV=$_ENV
+  - --set-env-vars=PROJECT_ID=tipschef-$_ENV,PROJECT_ENV=$_ENV
