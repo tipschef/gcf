@@ -4,7 +4,7 @@ substitutions:
   _PROJECT_LOCATION: eu
 
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     args:
       - gcloud
       - functions
