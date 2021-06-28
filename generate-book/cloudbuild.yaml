@@ -11,7 +11,7 @@ steps:
       - gcf-generate-book-$_ENV-$_PROJECT_LOCATION
       - --runtime=nodejs14
       - --region=$_CLOUD_FUNCTION_LOCATION
-      - --source=.
+      - --source=./generate-book
       - --entry-point=helloPubSub
       - --memory=512MB
       - --timeout=540s
