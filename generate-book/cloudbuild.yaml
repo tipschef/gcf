@@ -4,9 +4,8 @@ substitutions:
   _PROJECT_LOCATION: eu
 
 steps:
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  - name: 'gcr.io/cloud-builders/gcloud'
     args:
-      - gcloud
       - functions
       - deploy
       - gcf-generate-book-$_ENV-$_PROJECT_LOCATION
