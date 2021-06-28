@@ -1,0 +1,21 @@
+substitutions:
+  _ENV: dev
+  _CLOUD_FUNCTION_LOCATION: europe-west1
+  _PROJECT_LOCATION: eu
+
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - gcloud
+      - functions
+      - deploy
+      - gcf-generate-book-$_ENV-$_PROJECT_LOCATION
+      - --runtime=nodejs14
+      - --region=$_CLOUD_FUNCTION_LOCATION
+      - --source=.
+      - --entry-point=helloPubSub
+      - --memory=512MB
+      - --timeout=540s
+      - --trigger-event=google.pubsub.topic.publish
+      - --trigger-resource=topic-trigger-$_ENV-generate-book
+      - --set-env-vars=PROJECT_ID=tipschef-$_ENV,PROJECT_ENV=$_ENV
