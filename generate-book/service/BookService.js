@@ -1,11 +1,16 @@
 const {Book} = require("../model/Book");
 const {RecipeTemplate} = require("../model/RecipeTemplate");
-const http = require('http');
 const {TemplateList} = require("../model/TemplateList");
 const {Template} = require("../model/Template");
 const htmlPdf = require('html-pdf');
 const fs = require('fs')
 const FormData = require('form-data');
+let http;
+if (process.env.API_PREFIX === 'http://'){
+    http = require('http');
+}else{
+    http = require('https');
+}
 
 exports.BookService = class {
     book;
