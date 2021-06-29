@@ -71,6 +71,11 @@ exports.BookService = class {
             };
         }
 
+        if (process.env.API_PREFIX !== 'http://'){
+            options.protocol = 'https:';
+        }
+
+
         const res =  this.makeRequest(formData, options);
 
     }
