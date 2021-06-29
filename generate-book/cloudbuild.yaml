@@ -7,9 +7,6 @@ substitutions:
   _API_PORT: '0'
 
 steps:
-  - name: node
-    entrypoint: npm
-    args: [ 'install' ]
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - functions
