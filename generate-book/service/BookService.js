@@ -52,7 +52,7 @@ exports.BookService = class {
     postPDF() {
         console.log('Post PDF To API');
         const formData = new FormData();
-        formData.append('file', fs.createReadStream(this.pdf_filename));
+        formData.append('file', this.pdf);
         let options;
         if (process.env.API_PORT !== '0'){
             options = {
@@ -142,12 +142,12 @@ exports.BookService = class {
         html += this.getBookDescriptionHtml();
         html += this.getRecipeHtml();
 
-        htmlPdf.create(html, htmlPDFOptions).toFile('temp.pdf', (err, result) => {
+        htmlPdf.create(html, htmlPDFOptions).toStream((err, stream) => {
            if (err) {
                return console.log(err);
            }
            console.log('PDF Generated');
-           this.pdf_filename = result.filename;
+           this.pdf = stream;
            this.postPDF();
         });
     }

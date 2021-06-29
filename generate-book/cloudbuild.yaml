@@ -16,8 +16,8 @@ steps:
       - --region=$_CLOUD_FUNCTION_LOCATION
       - --source=./generate-book
       - --entry-point=consumePubSub
-      - --memory=512MB
-      - --timeout=540s
+      - --memory=1024MB
+      - --timeout=600s
       - --trigger-event=google.pubsub.topic.publish
       - --trigger-resource=topic-queue-$_ENV-gcf-generate-book
       - --set-env-vars=PROJECT_ID=tipschef-$_ENV,PROJECT_ENV=$_ENV,API_PREFIX=$_API_PREFIX,API_DOMAIN=$_API_DOMAIN,API_PORT=$_API_PORT
