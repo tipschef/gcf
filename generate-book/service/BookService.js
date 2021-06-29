@@ -136,7 +136,7 @@ exports.BookService = class {
         const htmlPDFOptions = {
             'format': 'A4',
             'type': 'pdf',
-            'timeout': '100000'
+            'timeout': '10000000'
         };
         let html = this.getCoverHtml();
         html += this.getBookDescriptionHtml();
