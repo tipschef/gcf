@@ -16,5 +16,5 @@ steps:
       - --memory=512MB
       - --timeout=540s
       - --trigger-event=google.pubsub.topic.publish
-      - --trigger-resource=topic-trigger-$_ENV-generate-book
+      - --trigger-resource=topic-queue-$_ENV-gcf-generate-book
       - --set-env-vars=PROJECT_ID=tipschef-$_ENV,PROJECT_ENV=$_ENV
