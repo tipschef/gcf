@@ -2,6 +2,9 @@
   "name": "sample-pubsub",
   "version": "0.0.1",
   "dependencies": {
-    "@google-cloud/pubsub": "^2.15.1"
-  }
+    "@google-cloud/pubsub": "^2.15.1",
+    "form-data": "^2.3.3",
+    "html-pdf": "^3.0.1"
+  },
+  "type": "commonjs"
 }

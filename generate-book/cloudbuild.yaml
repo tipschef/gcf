@@ -2,6 +2,9 @@ substitutions:
   _ENV: dev
   _CLOUD_FUNCTION_LOCATION: europe-west1
   _PROJECT_LOCATION: eu
+  _API_PREFIX: https://
+  _API_DOMAIN: gcr-tipschef-dev-europe-west1-api-5iymse6mzq-ew.a.run.app
+  _API_PORT: '0'
 
 steps:
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -12,9 +15,9 @@ steps:
       - --runtime=nodejs14
       - --region=$_CLOUD_FUNCTION_LOCATION
       - --source=./generate-book
-      - --entry-point=helloPubSub
+      - --entry-point=consumePubSub
       - --memory=512MB
       - --timeout=540s
       - --trigger-event=google.pubsub.topic.publish
       - --trigger-resource=topic-queue-$_ENV-gcf-generate-book
-      - --set-env-vars=PROJECT_ID=tipschef-$_ENV,PROJECT_ENV=$_ENV
+      - --set-env-vars=PROJECT_ID=tipschef-$_ENV,PROJECT_ENV=$_ENV,API_PREFIX=$_API_PREFIX,API_DOMAIN=$_API_DOMAIN,API_PORT=$_API_PORT
