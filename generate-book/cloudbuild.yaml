@@ -9,10 +9,6 @@ substitutions:
   _CLOUD_RUN_LOCATION: europe-west1
 
 steps:
-  - id: 'Install Node modules'
-    name: 'node:14.16.0'
-    entrypoint: 'npm'
-    args: [ 'i' ]
   - id: 'Build Docker image'
     name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
