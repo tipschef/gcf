@@ -11,7 +11,6 @@ substitutions:
 steps:
   - id: 'Build Docker image'
     name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
     args:
       - functions
       - deploy
