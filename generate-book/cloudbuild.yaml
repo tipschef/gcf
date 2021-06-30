@@ -44,13 +44,13 @@ steps:
       - -c
       - gcloud iam service-accounts create cloud-run-pubsub-invoker --display-name "Cloud Run Pub/Sub Invoker"
   - id: 'Give IAM service-account permission'
-  name: 'gcr.io/cloud-builders/gcloud'
-  waitFor:
-    - 'Deploy on Cloud Run'
-  entrypoint: bash
-  args:
-    - -c
-    - gcloud run services add-iam-policy-binding gcr-tipschef-$_PROJECT_ENV-$_CLOUD_RUN_LOCATION-generate-book --member=serviceAccount:cloud-run-pubsub-invoker@tipschef-dev.iam.gserviceaccount.com --role=roles/run.invoker
+    name: 'gcr.io/cloud-builders/gcloud'
+    waitFor:
+      - 'Deploy on Cloud Run'
+    entrypoint: bash
+    args:
+      - -c
+      - gcloud run services add-iam-policy-binding gcr-tipschef-$_PROJECT_ENV-$_CLOUD_RUN_LOCATION-generate-book --member=serviceAccount:cloud-run-pubsub-invoker@tipschef-dev.iam.gserviceaccount.com --role=roles/run.invoker
   - id: 'Create PUBSUB subscription'
     name: 'gcr.io/cloud-builders/gcloud'
     waitFor:
