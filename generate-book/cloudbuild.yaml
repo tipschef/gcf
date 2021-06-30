@@ -9,8 +9,7 @@ substitutions:
   _CLOUD_RUN_LOCATION: europe-west1
 
 steps:
-  - id: 'Build Docker image'
-    name: 'gcr.io/cloud-builders/docker'
+  - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - functions
       - deploy
