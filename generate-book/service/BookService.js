@@ -139,7 +139,7 @@ exports.BookService = class {
     generatePDF() {
         console.log('Generate PDF');
         const htmlPDFOptions = {
-            'format': 'A4',
+            'format': 'A3',
             'type': 'pdf',
             'timeout': '100000000'
         };
