@@ -18,7 +18,7 @@ steps:
     entrypoint: 'bash'
     args:
       - -c
-      - docker image build -t eu.gcr.io/$_PROJECT_ID/gcr/tipschef-$SHORT_SHA --build-arg PROJECT_ID=$_PROJECT_ID --build-arg API_PREFIX=$_API_PREFIX API_DOMAIN=$_API_DOMAIN API_PORT=$_API_PORT --build-arg PROJECT_ENV=$_PROJECT_ENV .
+      - docker image build -t eu.gcr.io/$_PROJECT_ID/gcr/tipschef-$SHORT_SHA --build-arg PROJECT_ID=$_PROJECT_ID --build-arg API_PREFIX=$_API_PREFIX --build-arg API_DOMAIN=$_API_DOMAIN --build-arg API_PORT=$_API_PORT --build-arg PROJECT_ENV=$_PROJECT_ENV .
   - id: 'Push to GCR'
     name: 'gcr.io/cloud-builders/docker'
     waitFor:
