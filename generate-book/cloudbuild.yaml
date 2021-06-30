@@ -16,7 +16,7 @@ steps:
       - --region=$_CLOUD_FUNCTION_LOCATION
       - --source=./generate-book
       - --entry-point=consumePubSub
-      - --memory=1024MB
+      - --memory=8Gi
       - --timeout=540s
       - --trigger-event=google.pubsub.topic.publish
       - --trigger-resource=topic-queue-$_ENV-gcf-generate-book
