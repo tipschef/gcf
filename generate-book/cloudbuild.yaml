@@ -5,19 +5,59 @@ substitutions:
   _API_PREFIX: https://
   _API_DOMAIN: gcr-tipschef-dev-europe-west1-api-5iymse6mzq-ew.a.run.app
   _API_PORT: '0'
+  _PROJECT_ID: tipschef-dev
+  _CLOUD_RUN_LOCATION: europe-west1
 
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - id: 'Install Node modules'
+    name: 'node:14.16.0'
+    entrypoint: 'npm'
+    args: [ 'i' ]
+  - id: 'Build Docker image'
+    name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
     args:
-      - functions
-      - deploy
-      - gcf-generate-book-$_ENV-$_PROJECT_LOCATION
-      - --runtime=nodejs14
-      - --region=$_CLOUD_FUNCTION_LOCATION
-      - --source=./generate-book
-      - --entry-point=consumePubSub
-      - --memory=1024MB
-      - --timeout=540s
-      - --trigger-event=google.pubsub.topic.publish
-      - --trigger-resource=topic-queue-$_ENV-gcf-generate-book
-      - --set-env-vars=PROJECT_ID=tipschef-$_ENV,PROJECT_ENV=$_ENV,API_PREFIX=$_API_PREFIX,API_DOMAIN=$_API_DOMAIN,API_PORT=$_API_PORT
+      - -c
+      - docker image build -t eu.gcr.io/$_PROJECT_ID/gcr/tipschef-$SHORT_SHA --build-arg PROJECT_ID=$_PROJECT_ID --build-arg API_PREFIX=$_API_PREFIX API_DOMAIN=$_API_DOMAIN API_PORT=$_API_PORT --build-arg PROJECT_ENV=$_PROJECT_ENV .
+  - id: 'Push to GCR'
+    name: 'gcr.io/cloud-builders/docker'
+    waitFor:
+      - 'Build Docker image'
+    entrypoint: bash
+    args:
+      - -c
+      - docker -- push eu.gcr.io/$_PROJECT_ID/gcr/tipschef-$SHORT_SHA
+  - id: 'Deploy on Cloud Run'
+    name: 'gcr.io/cloud-builders/gcloud'
+    waitFor:
+      - 'Push to GCR'
+    entrypoint: bash
+    args:
+      - -c
+      - gcloud run deploy gcr-tipschef-$_PROJECT_ENV-$_CLOUD_RUN_LOCATION-generate-book --image eu.gcr.io/$_PROJECT_ID/gcr/tipschef-$SHORT_SHA --platform managed --port 8080 --timeout=15m --memory=4Gi --concurrency=10 --cpu=4 --region $_CLOUD_RUN_LOCATION --revision-suffix=$SHORT_SHA --allow-unauthenticated --service-account=gcr-tipschef-dev-euw-api@tipschef-dev.iam.gserviceaccount.com
+  - id: 'Create IAM service-account'
+    name: 'gcr.io/cloud-builders/gcloud'
+    waitFor:
+      - 'Deploy on Cloud Run'
+    entrypoint: bash
+    args:
+      - -c
+      - gcloud iam service-accounts create cloud-run-pubsub-invoker --display-name "Cloud Run Pub/Sub Invoker"
+ - id: 'Give IAM service-account permission'
+  name: 'gcr.io/cloud-builders/gcloud'
+  waitFor:
+    - 'Deploy on Cloud Run'
+  entrypoint: bash
+  args:
+    - -c
+    - gcloud run services add-iam-policy-binding gcr-tipschef-$_PROJECT_ENV-$_CLOUD_RUN_LOCATION-generate-book --member=serviceAccount:cloud-run-pubsub-invoker@tipschef-dev.iam.gserviceaccount.com --role=roles/run.invoker
+- id: 'Create PUBSUB subscription'
+  name: 'gcr.io/cloud-builders/gcloud'
+  waitFor:
+    - 'Give IAM service-account permission'
+  entrypoint: bash
+  args:
+    - -c
+    - gcloud pubsub subscriptions create myRunSubscription --topic projects/$_PROJECT_ID/topics/topic-queue-$_PROJECT_ENV-gcf-generate-book --push-endpoint=/ --push-auth-service-account=cloud-run-pubsub-invoker@tipschef-dev.iam.gserviceaccount.com
+
+
