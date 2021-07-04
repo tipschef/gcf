@@ -6,7 +6,6 @@ substitutions:
   _API_DOMAIN: gcr-tipschef-dev-europe-west1-api-5iymse6mzq-ew.a.run.app
   _API_PORT: '0'
   _PROJECT_ID: tipschef-dev
-  _CLOUD_RUN_LOCATION: europe-west1
 
 steps:
   - name: 'gcr.io/cloud-builders/gcloud'
