@@ -18,3 +18,4 @@ steps:
   - --trigger-event=google.pubsub.topic.publish
   - --trigger-resource=topic-trigger-$_PROJECT_ENV-start_gcf_generate_dashboard
   - --set-env-vars=PROJECT_ID=tipschef-$_PROJECT_ENV,PROJECT_ENV=$_PROJECT_ENV
+  - --service-account=gcr-tipschef-$_PROJECT_ENV-euw-api@tipschef-$_PROJECT_ENV.iam.gserviceaccount.com
