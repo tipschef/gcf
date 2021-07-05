@@ -11,7 +11,7 @@ class APIService:
     user_password: str
 
     def create_dashboard_data(self):
-        self._make_http_query('/v1/users/dashboard/data')
+        self._make_http_query('/v1/admin/dashboard/generate')
 
     def _authenticate(self):
         try:
