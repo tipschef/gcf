@@ -6,7 +6,7 @@ It send payload to the topic called `topic_trigger_dev_start_gcf_generate_dashbo
 ## Build
 This GCF is automatically build on push
 
-###Build local
+### Build local
 run this command from the root directory `gcloud builds submit --config ./generate_dashboard/cloudbuild.yaml ./generate_dashboard/.`
 
 ## Develop

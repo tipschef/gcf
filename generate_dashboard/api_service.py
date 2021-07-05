@@ -11,7 +11,7 @@ class APIService:
     user_password: str
 
     def create_dashboard_data(self):
-        self._make_http_query('/v1/users/dashboard/data')
+        self._make_http_query('/v1/admin/dashboard/generate')
 
     def _authenticate(self):
         try:
@@ -32,7 +32,7 @@ class APIService:
         try:
             token = self._get_token(self._authenticate())
             headers = {'Authorization': f'Bearer {token}'}
-            response = requests.get(url=f'{self.url}{url_route}', headers=headers)
+            response = requests.post(url=f'{self.url}{url_route}', headers=headers, data={})
             json_response = response.json()
 
             return json_response
