@@ -1,5 +1,5 @@
 substitutions:
-  _ENV: dev
+  _PROJECT_ENV: dev
   _CLOUD_FUNCTION_LOCATION: europe-west3
   _PROJECT_LOCATION: eu
 
@@ -8,7 +8,7 @@ steps:
   args:
   - functions
   - deploy
-  - gcf-generate_dashboard-$_ENV-$_PROJECT_LOCATION
+  - gcf-generate_dashboard-$_PROJECT_EN-$_PROJECT_LOCATION
   - --runtime=python38
   - --region=$_CLOUD_FUNCTION_LOCATION
   - --source=.
@@ -16,5 +16,5 @@ steps:
   - --memory=128MB
   - --timeout=540s
   - --trigger-event=google.pubsub.topic.publish
-  - --trigger-resource=topic-trigger-$_ENV-start_gcf_generate_dashboard
-  - --set-env-vars=PROJECT_ID=tipschef-$_ENV,PROJECT_ENV=$_ENV
+  - --trigger-resource=topic-trigger-$_PROJECT_EN-start_gcf_generate_dashboard
+  - --set-env-vars=PROJECT_ID=tipschef-$_ENV,PROJECT_ENV=$_PROJECT_ENV
