@@ -1,9 +1,9 @@
 import os
 from dataclasses import dataclass, field
 
-from generate_dashboard.api_service import APIService
-from generate_dashboard.exceptions import EnvironmentVariableNotSetException
-from generate_dashboard.secret_manager_service import SecretManagerService
+from api_service import APIService
+from exceptions import EnvironmentVariableNotSetException
+from secret_manager_service import SecretManagerService
 
 
 @dataclass
