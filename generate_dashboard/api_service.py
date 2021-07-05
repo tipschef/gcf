@@ -32,7 +32,7 @@ class APIService:
         try:
             token = self._get_token(self._authenticate())
             headers = {'Authorization': f'Bearer {token}'}
-            response = requests.get(url=f'{self.url}{url_route}', headers=headers)
+            response = requests.post(url=f'{self.url}{url_route}', headers=headers, data={})
             json_response = response.json()
 
             return json_response
