@@ -17,4 +17,4 @@ steps:
   - --timeout=540s
   - --trigger-event=google.pubsub.topic.publish
   - --trigger-resource=topic-trigger-$_PROJECT_ENV-start_gcf_generate_dashboard
-  - --set-env-vars=PROJECT_ID=tipschef-$_ENV,PROJECT_ENV=$_PROJECT_ENV
+  - --set-env-vars=PROJECT_ID=tipschef-$_PROJECT_ENV,PROJECT_ENV=$_PROJECT_ENV
